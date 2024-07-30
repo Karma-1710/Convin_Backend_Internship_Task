@@ -134,5 +134,9 @@ This documentation provides an overview and setup instructions for the Convin ba
 - User Authentication and Authorization
 - Integration with PostgreSQL for robust data management
 
+## ER DIAGRAM
+
+![ERD](https://github.com/user-attachments/assets/d10a4c4d-ea55-4e15-8e91-0020db461930)
+
 # Conclusion
 This documentation outlines the setup, API endpoints, and features of the Convin backend intern task for a Daily Expenses Sharing Application.
