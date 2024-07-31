@@ -30,19 +30,24 @@ This documentation provides an overview and setup instructions for the Convin ba
 5. **Database Setup:**
     - Open pgAdmin and ensure it is running on localhost port 5432.
     - In Servers, create a new Database named ConvinDB.
-    - Create a Login/Group Role named ConvinUser with password 'convin' and grant all privileges.
+    - Create a Login/Group Role named ConvinUser with password 'convin' and grant all privileges including:
+         - Can Login
+         - SuperUser
+         - Create roles
+         - Create databases
 
-   In case of Custom DB or User name, Make sure to update in settings.py in Backend directory
+   In case of Custom DB or User name, Make sure to update in .env file in Backend directory
    ```bash
    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ConvinDB',
-        'USER': 'ConvinUser',
-        'PASSWORD': 'convin',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }}
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    }
+   }
 
 6. **Migrate Database Changes:**
    ```bash
@@ -133,6 +138,12 @@ This documentation provides an overview and setup instructions for the Convin ba
 - Downloadable Balance Sheets
 - User Authentication and Authorization
 - Integration with PostgreSQL for robust data management
+- Optimized Streaming response for large datasets in Creation of balance sheets
+
+8. ## Run Test Cases:
+   ```bash
+   cd backend
+   python manage.py test api
 
 ## ER DIAGRAM
 
