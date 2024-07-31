@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import BalanceSheetSerializer
+from django.http import StreamingHttpResponse
+from io import StringIO
 
 # Create your views here.
 
@@ -62,15 +64,24 @@ class GenerateBalanceSheetCSVView(generics.GenericAPIView):
         # Filter BalanceSheet by the current user
         balance_sheets = BalanceSheet.objects.filter(user=user)
         
-        # Create an HTTP response with CSV content
-        response = HttpResponse(content_type='text/csv')
+        # Create streaming response with CSV content
+        response = StreamingHttpResponse(
+            streaming_content=self.generate_csv(balance_sheets),
+            content_type='text/csv',
+        )
         response['Content-Disposition'] = 'attachment; filename="balance_sheet.csv"'
+        
+        return response
 
-        writer = csv.writer(response)
+    def generate_csv(self, balance_sheets):
+        # Generator function to yield CSV rows progressively
+        pseudo_buffer = StringIO()
+        writer = csv.writer(pseudo_buffer)
+        
+        # Write header row
         writer.writerow(['ID', 'Expense ID', 'Split Amount', 'Owner ID', 'Total Amount', 'Title', 'Description'])
-
+        
         for sheet in balance_sheets:
-            # Fetch related Expense object for BalanceSheet
             expense = sheet.expense
             writer.writerow([
                 sheet.id,
@@ -81,8 +92,14 @@ class GenerateBalanceSheetCSVView(generics.GenericAPIView):
                 expense.title,
                 expense.description
             ])
+            
+            # Yield the content of the buffer
+            yield pseudo_buffer.getvalue()
+            
+            # Reset the buffer
+            pseudo_buffer.seek(0)
+            pseudo_buffer.truncate(0)
 
-        return response
     
     
 class GetUserByEmailView(APIView):
