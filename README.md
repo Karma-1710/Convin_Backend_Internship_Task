@@ -1,1 +1,142 @@
-# Convin_Backend_Internship_Task
+# Convin_Backend_Internship_Task (Daily Expense Sharing Application)
+
+### Description
+This documentation provides an overview and setup instructions for the Convin backend intern task, which involves building a Daily Expenses Sharing Application using Python Django Framework and PostgreSQL as the database.
+
+### Prerequisites
+- Python 3.11.5
+- PostgreSQL (with pgAdmin for management)
+- Git
+
+### Setup Instructions
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/Karma-1710/Convin_Backend_Internship_Task.git
+   cd Convin_Backend_Internship_Task
+
+2. **Set Up Virtual Environment:**
+   ```bash
+   python -m venv env
+
+3. **Activate the Environment:**
+   ```bash
+   .\env\Scripts\activate
+
+4. **Install the dependencies:**
+   ```bash
+   pip install -r requirements.txt
+
+5. **Database Setup:**
+    - Open pgAdmin and ensure it is running on localhost port 5432.
+    - In Servers, create a new Database named ConvinDB.
+    - Create a Login/Group Role named ConvinUser with password 'convin' and grant all privileges.
+
+   In case of Custom DB or User name, Make sure to update in settings.py in Backend directory
+   ```bash
+   DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ConvinDB',
+        'USER': 'ConvinUser',
+        'PASSWORD': 'convin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }}
+
+6. **Migrate Database Changes:**
+   ```bash
+   cd backend
+   python manage.py makemigrations
+   python manage.py migrate
+
+7. **Run Django Server:**
+   ```bash
+   python manage.py runserver
+   
+### The server will be accessible at http://localhost:8000.
+
+## API Endpoints
+
+1. User Registration
+   - POST '/api/user/register/'
+     ```bash
+     {
+      "email": "test@gmail.com",
+      "name": "Test",
+      "mobile": "0000099999",
+      "password": "testpassword"
+      }
+
+2. User Authentication
+    - POST '/api/token/'
+      ```bash
+      {
+      "email": "test@gmail.com",
+      "password": "testpassword"
+      }
+    - POST '/api/token/refresh/'
+      
+3. User Management
+    - GET '/api/users/'
+    - POST '/api/user/getbyemail/'
+  
+4. Expense Management
+     - POST '/api/create-expense/' (Protected Route - Bearer Token required)
+         - equal split method
+           ```bash
+           {
+            "amount": "100.00",
+            "title": "Equal Split Expense",
+            "description": "Example expense with equal split method",
+            "split_method": "equal"
+           }
+        - exact split method
+          ```bash
+          {
+            "amount": "200.00",
+            "title": "Exact Split Expense",
+            "description": "Example expense with exact split method",
+            "split_method": "exact",
+            "exact_splits": [
+                 {"user": 1, "split_amount": "50.00"},
+                 {"user": 2, "split_amount": "100.00"},
+                 {"user": 3, "split_amount": "50.00"}
+            ]
+          }
+
+       - percentage split method
+         ```bash
+           {
+            "amount": "500.00",
+            "title": "Percentage Split Expense",
+            "description": "Example expense with percentage split method",
+            "split_method": "percentage",
+            "percentage_splits": [
+                 {"user": 1, "percentage": "30.0"},
+                 {"user": 2, "percentage": "40.0"},
+                 {"user": 3, "percentage": "30.0"}
+             ]
+          }
+5. Balance Sheet
+      - GET /api/balance-sheet/ (Protected Route - Bearer Token required)
+
+6. User Expenses
+      - GET /api/user/current-user-expenses/ (Protected Route - Bearer Token required)
+
+7. Other Endpoints
+      - GET /api/get-all-expenses/
+      - GET /api/user/<int:user_id>/expenses/
+  
+## Additional Features:
+- Comprehensive API Documentation
+- Downloadable Balance Sheets
+- User Authentication and Authorization
+- Integration with PostgreSQL for robust data management
+
+## ER DIAGRAM
+
+![ERD](https://github.com/user-attachments/assets/d10a4c4d-ea55-4e15-8e91-0020db461930)
+
+# Conclusion
+This documentation outlines the setup, API endpoints, and features of the Convin backend intern task for a Daily Expenses Sharing Application.
