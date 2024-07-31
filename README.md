@@ -7,6 +7,7 @@ This documentation provides an overview and setup instructions for the Convin ba
 - Python 3.11.5
 - PostgreSQL (with pgAdmin for management)
 - Git
+- Postman
 
 ### Setup Instructions
 
@@ -74,7 +75,7 @@ This documentation provides an overview and setup instructions for the Convin ba
       }
 
 2. User Authentication
-    - POST '/api/token/'
+    - POST '/api/token/' (Get the Bearer Access Token from here using Postman)
       ```bash
       {
       "email": "test@gmail.com",
@@ -87,7 +88,7 @@ This documentation provides an overview and setup instructions for the Convin ba
     - POST '/api/user/getbyemail/'
   
 4. Expense Management
-     - POST '/api/create-expense/' (Protected Route - Bearer Token required)
+     - POST '/api/create-expense/' (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
          - equal split method
            ```bash
            {
@@ -124,10 +125,10 @@ This documentation provides an overview and setup instructions for the Convin ba
              ]
           }
 5. Balance Sheet
-      - GET /api/balance-sheet/ (Protected Route - Bearer Token required)
+      - GET /api/balance-sheet/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
 
 6. User Expenses
-      - GET /api/user/current-user-expenses/ (Protected Route - Bearer Token required)
+      - GET /api/user/current-user-expenses/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
 
 7. Other Endpoints
       - GET /api/get-all-expenses/
