@@ -141,6 +141,7 @@ This documentation provides an overview and setup instructions for the Convin ba
 - Optimized Streaming response for large datasets in Creation of balance sheets
 
 8. ## Run Test Cases:
+   To run the test cases, execute the following commands while in the virtual environment:
    ```bash
    cd backend
    python manage.py test api
