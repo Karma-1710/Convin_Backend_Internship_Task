@@ -125,7 +125,7 @@ This documentation provides an overview and setup instructions for the Convin ba
              ]
           }
 5. Balance Sheet
-      - GET /api/balance-sheet/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
+      - GET /api/balance-sheet/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token. Click on Send and Download option from dropdown of Send button in Postman)
 
 6. User Expenses
       - GET /api/user/current-user-expenses/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
