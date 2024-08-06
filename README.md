@@ -7,6 +7,7 @@ This documentation provides an overview and setup instructions for the Convin ba
 - Python 3.11.5
 - PostgreSQL (with pgAdmin for management)
 - Git
+- Postman
 
 ### Setup Instructions
 
@@ -30,19 +31,24 @@ This documentation provides an overview and setup instructions for the Convin ba
 5. **Database Setup:**
     - Open pgAdmin and ensure it is running on localhost port 5432.
     - In Servers, create a new Database named ConvinDB.
-    - Create a Login/Group Role named ConvinUser with password 'convin' and grant all privileges.
+    - Create a Login/Group Role named ConvinUser with password 'convin' and grant all privileges including:
+         - Can Login
+         - SuperUser
+         - Create roles
+         - Create databases
 
-   In case of Custom DB or User name, Make sure to update in settings.py in Backend directory
+   In case of Custom DB or User name, Make sure to update in .env file in Backend directory
    ```bash
    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ConvinDB',
-        'USER': 'ConvinUser',
-        'PASSWORD': 'convin',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }}
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    }
+   }
 
 6. **Migrate Database Changes:**
    ```bash
@@ -69,7 +75,7 @@ This documentation provides an overview and setup instructions for the Convin ba
       }
 
 2. User Authentication
-    - POST '/api/token/'
+    - POST '/api/token/' (Get the Bearer Access Token from here using Postman)
       ```bash
       {
       "email": "test@gmail.com",
@@ -82,7 +88,7 @@ This documentation provides an overview and setup instructions for the Convin ba
     - POST '/api/user/getbyemail/'
   
 4. Expense Management
-     - POST '/api/create-expense/' (Protected Route - Bearer Token required)
+     - POST '/api/create-expense/' (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
          - equal split method
            ```bash
            {
@@ -119,10 +125,10 @@ This documentation provides an overview and setup instructions for the Convin ba
              ]
           }
 5. Balance Sheet
-      - GET /api/balance-sheet/ (Protected Route - Bearer Token required)
+      - GET /api/balance-sheet/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token. Click on Send and Download option from dropdown of Send button in Postman)
 
 6. User Expenses
-      - GET /api/user/current-user-expenses/ (Protected Route - Bearer Token required)
+      - GET /api/user/current-user-expenses/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
 
 7. Other Endpoints
       - GET /api/get-all-expenses/
@@ -133,6 +139,13 @@ This documentation provides an overview and setup instructions for the Convin ba
 - Downloadable Balance Sheets
 - User Authentication and Authorization
 - Integration with PostgreSQL for robust data management
+- Optimized Streaming response for large datasets in Creation of balance sheets
+
+8. ## Run Test Cases:
+   To run the test cases, execute the following commands while in the virtual environment:
+   ```bash
+   cd backend
+   python manage.py test api
 
 ## ER DIAGRAM
 
