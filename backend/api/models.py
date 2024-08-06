@@ -63,4 +63,5 @@ class BalanceSheet(models.Model):
 
     def __str__(self):
         return f"BalanceSheet for {self.user} - {self.expense.id}"
+    
 

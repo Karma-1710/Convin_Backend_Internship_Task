@@ -1,5 +1,5 @@
 from django.urls import path, include
-from api.views import CreateUserView, UserListView, ExpenseCreateView, GenerateBalanceSheetCSVView, GetUserByEmailView, GetUserExpensesView, GetAllExpensesView, GetExpensesByUserView
+from api.views import CreateUserView, UserListView, ExpenseCreateView, GenerateBalanceSheetCSVView, GetUserByEmailView, GetUserExpensesView, GetAllExpensesView, GetExpensesByUserView, GenerateOverallBalanceSheetCSVView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -14,4 +14,5 @@ urlpatterns = [
     path('api/get-all-expenses/', GetAllExpensesView.as_view(), name='get-all-expenses'),
     path('api/user/<int:user_id>/expenses/', GetExpensesByUserView.as_view(), name='get-expenses-by-user'),
     path('api/balance-sheet/', GenerateBalanceSheetCSVView.as_view(), name='balance-sheet-csv'),
+    path('api/overall-balance-sheet/', GenerateOverallBalanceSheetCSVView.as_view(), name='overall-balance-sheet-csv'),
 ]

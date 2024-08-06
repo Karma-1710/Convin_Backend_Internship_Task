@@ -100,6 +100,53 @@ class GenerateBalanceSheetCSVView(generics.GenericAPIView):
             pseudo_buffer.seek(0)
             pseudo_buffer.truncate(0)
 
+
+class GenerateOverallBalanceSheetCSVView(generics.GenericAPIView):
+    """
+    API view to generate a CSV report of the overall BalanceSheet for all users.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        # Fetch all balance sheets
+        balance_sheets = BalanceSheet.objects.all()
+        
+        # Create streaming response with CSV content
+        response = StreamingHttpResponse(
+            streaming_content=self.generate_csv(balance_sheets),
+            content_type='text/csv',
+        )
+        response['Content-Disposition'] = 'attachment; filename="overall_balance_sheet.csv"'
+        
+        return response
+
+    def generate_csv(self, balance_sheets):
+        # Generator function to yield CSV rows progressively
+        pseudo_buffer = StringIO()
+        writer = csv.writer(pseudo_buffer)
+        
+        # Write header row
+        writer.writerow(['ID', 'Expense ID', 'User ID', 'Split Amount', 'Owner ID', 'Total Amount', 'Title', 'Description'])
+        
+        for sheet in balance_sheets:
+            expense = sheet.expense
+            writer.writerow([
+                sheet.id,
+                expense.id,
+                sheet.user.id,
+                sheet.split_amount,
+                sheet.owner.id,
+                sheet.amount,
+                expense.title,
+                expense.description
+            ])
+            
+            # Yield the content of the buffer
+            yield pseudo_buffer.getvalue()
+            
+            # Reset the buffer
+            pseudo_buffer.seek(0)
+            pseudo_buffer.truncate(0)
     
     
 class GetUserByEmailView(APIView):
