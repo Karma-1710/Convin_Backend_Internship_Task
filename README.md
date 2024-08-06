@@ -126,6 +126,7 @@ This documentation provides an overview and setup instructions for the Convin ba
           }
 5. Balance Sheet
       - GET /api/balance-sheet/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token. Click on Send and Download option from dropdown of Send button in Postman)
+      - GET /api/overall-balance-sheet/ (Allowed for anyone. Click on Send and Download option from dropdown of Send button in Postman)
 
 6. User Expenses
       - GET /api/user/current-user-expenses/  (Protected Route - Bearer Token required, Copy the Access token and paste it into Authorization Tab inside Token)
@@ -136,7 +137,7 @@ This documentation provides an overview and setup instructions for the Convin ba
   
 ## Additional Features:
 - Comprehensive API Documentation
-- Downloadable Balance Sheets
+- Downloadable Balance Sheets and Overall Expense BalanceSheet
 - User Authentication and Authorization
 - Integration with PostgreSQL for robust data management
 - Optimized Streaming response for large datasets in Creation of balance sheets
