@@ -1,4 +1,4 @@
-# Convin_Backend_Internship_Task (Daily Expense Sharing Application)
+# Convin_Backend_Task (Daily Expense Sharing Application)
 
 ### Description
 This documentation provides an overview and setup instructions for the Convin backend intern task, which involves building a Daily Expenses Sharing Application using Python Django Framework and PostgreSQL as the database.
